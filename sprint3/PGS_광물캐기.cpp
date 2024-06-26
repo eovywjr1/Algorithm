@@ -5,7 +5,9 @@
 
 using namespace std;
 
-const int invalidTired = INT_MAX;
+constexpr int invalidTired = INT_MAX;
+constexpr int checkMineralCountPerOneTime = 5;
+constexpr int pickSize = 3; 
 
 int caculateTired(const int pickIndex, const string mineral){
     switch(pickIndex){
@@ -32,44 +34,42 @@ int caculateTired(const int pickIndex, const string mineral){
     return 0;
 }
 
-int checkTired(const int mineralIndex, const int pickIndex, vector<int> remainPicks, const vector<string>& minerals){
+int checkTired(const int mineralIndex, const int pickIndex, vector<int> picks, const vector<string>& minerals){
     const int mineralSize = minerals.size();
     if(mineralSize <= mineralIndex )
         return 0;
     
     int tired = 0;
-    for(int index = mineralIndex; index<mineralSize && index<mineralIndex+5; ++index){
+    for(int index = mineralIndex; index<mineralSize && index<mineralIndex+checkMineralCountPerOneTime; ++index){
         tired += caculateTired(pickIndex, minerals[index]);
     }
     
-    if(remainPicks[0] == 0 && remainPicks[1] == 0 && remainPicks[2] == 0)
-        return tired;
-    
     int minNextTired=invalidTired;
-    for(int index=0;index<3;++index){
-        if(remainPicks[index] == 0)
+    for(int index=0;index<pickSize;++index){
+        if(picks[index] == 0)
             continue;
         
-        vector<int> remainTempPicks(remainPicks);
-        --remainTempPicks[index];
-        
-        minNextTired = min(minNextTired, checkTired(mineralIndex+5, index, remainTempPicks, minerals));
+        --picks[index];
+        minNextTired = min(minNextTired, checkTired(mineralIndex+checkMineralCountPerOneTime, index, picks, minerals));
+        ++picks[index];
     }
     
-    return tired + minNextTired;
+    if(minNextTired != invalidTired)
+        tired += minNextTired;
+    
+    return tired;
 }
 
 int solution(vector<int> picks, vector<string> minerals) {
     int answer = invalidTired;
     
-    for(int index=0;index<3;++index){
+    for(int index=0;index<pickSize;++index){
         if(picks[index] == 0)
             continue;
         
-        vector<int> remainTempPicks(picks);
-        --remainTempPicks[index];
-        
-        answer = min(answer, checkTired(0, index, remainTempPicks, minerals));
+        --picks[index];
+        answer = min(answer, checkTired(0, index, picks, minerals));
+        ++picks[index];
     }
     
     return answer;
