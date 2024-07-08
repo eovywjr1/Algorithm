@@ -14,7 +14,6 @@ int main() {
 	string str;
 	cin >> str;
 
-	int index = M - 1;
 	int answer = 0;
 
 	for (int index = 0; index < M; ++index) {
