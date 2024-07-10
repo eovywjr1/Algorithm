@@ -22,8 +22,6 @@ int check(const int n, const int remainNum, const int count) {
 
 	if (remainNum <= 0)
 		return 0;
-	else if (n <= 0)
-		return INT_MAX - 1;
 
 	int tempCount = 1 + check(sqrt(remainNum - subNum), remainNum - subNum, count + 1);
 	tempCount = min(tempCount, check(n - 1, remainNum, count));
