@@ -4,21 +4,11 @@
 
 using namespace std;
 
-bool IsInteger(const double num) {
-	if (num - static_cast<int>(num) == 0)
-		return true;
-
-	return false;
-}
-
 int check(const int n, const int remainNum, const int count) {
 	const int subNum = pow(n, 2);
 
-	if (count > 4 || subNum * (4 - count) < remainNum)
+	if (subNum * (4 - count) < remainNum)
 		return INT_MAX - 1;
-
-	if (n == 1)
-		return remainNum;
 
 	if (remainNum <= 0)
 		return 0;
