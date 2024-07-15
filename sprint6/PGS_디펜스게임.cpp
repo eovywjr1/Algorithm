@@ -13,24 +13,12 @@ int solution(int n, int k, vector<int> enemy) {
         if(n<=0)
             break;
         
-        if(k > 0)
+        mujuckQueue.push(enemyCount);
+        
+        if(mujuckQueue.size() > k)
         {
-            --k;
-            mujuckQueue.push(enemyCount);
-        }
-        else
-        {
-            const int minEnemy = mujuckQueue.top();
-            if(minEnemy < enemyCount)
-            {
-                n -= minEnemy;
-                mujuckQueue.pop();
-                mujuckQueue.push(enemyCount);
-            }
-            else
-            {
-                n -= enemyCount;
-            }
+            n -= mujuckQueue.top();
+            mujuckQueue.pop();
         }
         
         ++answer;
