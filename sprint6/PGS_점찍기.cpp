@@ -10,7 +10,7 @@ long long solution(int k, int d) {
     answer = d/k * 2 + 1;
     
     for(long long y=k; y< d;y+=k){
-        answer += static_cast<long long>(sqrt( 1ll * d*d - y*y)) / k;
+        answer += static_cast<int>(sqrt( 1ll * d*d - y*y)) / k;
     }
     
     return answer;
