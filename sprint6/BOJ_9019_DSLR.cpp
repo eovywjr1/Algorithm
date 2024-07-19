@@ -37,7 +37,7 @@ int R(const int A)
 	return d4 * 1000 + d1 * 100 + d2 * 10 + d3;
 }
 
-string DSLR(const int A, const int B)
+void DSLR(const int A, const int B)
 {
 	string answer;
 	queue<pair<int, string>> queue;
@@ -54,7 +54,10 @@ string DSLR(const int A, const int B)
 		const int currentNum = currentCase.first;
 		const string currentString = currentCase.second;
 		if (currentNum == B)
-			return currentString;
+		{
+			cout << answer << '\n';
+			return;
+		}
 
 		const int DNum = D(currentNum);
 		if (visited[DNum] == false)
@@ -84,8 +87,6 @@ string DSLR(const int A, const int B)
 			visited[RNum] = true;
 		}
 	}
-
-	return nullptr;
 }
 
 int main()
@@ -101,8 +102,7 @@ int main()
 	{
 		int A, B;
 		cin >> A >> B;
-
-		string answer = DSLR(A, B);
-		cout << answer << '\n';
+		
+		DSLR(A, B);
 	}
 }
