@@ -54,12 +54,10 @@ int main()
 
 	cin >> N;
 
-	vector<string> rgbVector;
+	vector<string> rgbVector(N);
 	for (int index = 0; index < N; ++index)
 	{
-		string rgb;
-		cin >> rgb;
-		rgbVector.push_back(rgb);
+		cin >> rgbVector[index];
 	}
 
 	vector<vector<bool>> normalVistied(N, vector<bool>(N, false));
