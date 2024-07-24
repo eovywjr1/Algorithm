@@ -27,7 +27,7 @@ int FindMaxCondtionAnswer(const vector<int>& aliquotVector, const vector<int>& c
     for(const int aliquot : aliquotVector){
         bool checkCondition = true;
         
-        for(int index=0; index<checkAliquotVectorSize;++index ){
+        for(size_t index=0; index<checkAliquotVectorSize;++index ){
             if(checkAliquotVector[index] % aliquot != 0){
                 checkCondition=false;
                 break;
