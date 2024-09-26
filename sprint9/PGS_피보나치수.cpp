@@ -3,7 +3,7 @@
 using namespace std;
 
 int solution(int n) {
-    vector<long long> fibonacciVector(n+1);
+    vector<int> fibonacciVector(n+1);
     fibonacciVector[0]=0;
     fibonacciVector[1]=1;
     
