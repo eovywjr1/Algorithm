@@ -4,21 +4,21 @@
 
 using namespace std;
 
-bool CheckCroatiaAlphabetAndGetCroatiaAlphabetLength(const string& str, const int startIndex, int& croatiaAlphabetLength)
+bool CheckCroatiaAlphabetAndGetCroatiaAlphabetLength(const string& str, const size_t startIndex, size_t& croatiaAlphabetLength)
 {
 	constexpr int croatiaAlphabetSize = 8;
 	const array<string, croatiaAlphabetSize> croatiaAlphabetArray = { "c=", "c-","dz=","d-","lj","nj","s=","z=" };
 	
-	for (int croatiaAlphabetIndex = 0; croatiaAlphabetIndex < croatiaAlphabetSize; ++croatiaAlphabetIndex)
+	for (size_t croatiaAlphabetIndex = 0; croatiaAlphabetIndex < croatiaAlphabetSize; ++croatiaAlphabetIndex)
 	{
-		const int checkcroatiaAlphabetLength = croatiaAlphabetArray[croatiaAlphabetIndex].length();
+		const size_t checkcroatiaAlphabetLength = croatiaAlphabetArray[croatiaAlphabetIndex].length();
 
 		if (str.length() - startIndex < checkcroatiaAlphabetLength)
 			continue;
 
 		bool isCroatiaAlphabet = true;
 		
-		for (int strIndex = 0; strIndex < checkcroatiaAlphabetLength; ++strIndex)
+		for (size_t strIndex = 0; strIndex < checkcroatiaAlphabetLength; ++strIndex)
 		{
 			if (str[startIndex + strIndex] != croatiaAlphabetArray[croatiaAlphabetIndex][strIndex])
 			{
@@ -47,12 +47,12 @@ int main()
 	string str;
 	cin >> str;
 
-	const int strLength = str.length();
+	const size_t strLength = str.length();
 	int croatiaAlphabetCount = 0;
 
-	for (int strIndex = 0; strIndex < strLength; ++strIndex)
+	for (size_t strIndex = 0; strIndex < strLength; ++strIndex)
 	{
-		int croatiaAlphabetLength = -1;
+		size_t croatiaAlphabetLength = -1;
 
 		if (CheckCroatiaAlphabetAndGetCroatiaAlphabetLength(str, strIndex, croatiaAlphabetLength))
 		{
