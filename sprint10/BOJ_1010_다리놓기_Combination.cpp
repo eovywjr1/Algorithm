@@ -1,5 +1,4 @@
 #include <iostream>
-#include <cmath>
 
 using namespace std;
 
@@ -30,6 +29,6 @@ int main()
 		int leftSite = 0, rightSite = 0;
 		cin >> leftSite >> rightSite;
 
-		cout << combination(max(leftSite, rightSite), min(leftSite, rightSite)) << '\n';
+		cout << combination(rightSite, leftSite) << '\n';
 	}
 }
