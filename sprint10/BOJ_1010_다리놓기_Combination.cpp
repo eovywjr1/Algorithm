@@ -2,9 +2,9 @@
 
 using namespace std;
 
-long long combination(const int elementCount, const int selectCount)
+int combination(const int elementCount, const int selectCount)
 {
-	long long result = 1;
+	int result = 1;
 
 	for (int element = elementCount, select = 1; select <= selectCount; --element, ++select)
 	{
