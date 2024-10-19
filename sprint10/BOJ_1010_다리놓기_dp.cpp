@@ -13,7 +13,7 @@ int main()
 	cin >> testCase;
 
 	constexpr int maxSiteCount = 30;
-	array<array<long long, maxSiteCount>, maxSiteCount> edgeCaseArray;
+	array<array<int, maxSiteCount>, maxSiteCount> edgeCaseArray;
 
 	for (int siteCount = 1; siteCount < maxSiteCount; ++siteCount)
 	{
@@ -25,7 +25,7 @@ int main()
 	{
 		for (int rightSiteCount = 2; rightSiteCount < maxSiteCount; ++rightSiteCount)
 		{
-			long long edgeCaseSum = 0;
+			int edgeCaseSum = 0;
 			
 			for (int subRightSiteCount = leftSiteCount - 1; subRightSiteCount < rightSiteCount; ++subRightSiteCount)
 			{
