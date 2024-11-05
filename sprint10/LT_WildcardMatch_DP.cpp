@@ -16,7 +16,7 @@ public:
         for(int pIndex = 1; pIndex <= pLength; ++pIndex ){
             for(int sIndex = 1; sIndex <= sLength; ++sIndex){
                 if(p[pIndex-1] == '*'){
-                    // 현재 *를 무시하거나 추가
+                    // 현재 *를 문자열로 치환 || 빈 문자열로 치환
                     matchDp[pIndex][sIndex] = matchDp[pIndex][sIndex-1] || matchDp[pIndex-1][sIndex];
                 }
                 else if(p[pIndex-1] == s[sIndex-1] || p[pIndex-1] == '?'){
