@@ -49,8 +49,10 @@ int main()
 
 	for (int DominoIndex = 0; DominoIndex < DominoCount; ++DominoIndex)
 	{
+		// 현재 도미노를 왼쪽으로 넘어뜨리는 최소 인덱스 이전까지의 넘어뜨리는 횟수 + 현재 도미노를 왼쪽으로 넘어뜨리는 횟수(1)
 		MinPushDomino[DominoIndex] = (DominoLeftConcurrencyFallIndex[DominoIndex] == 0) ? 1 : min(MinPushDomino[DominoIndex], MinPushDomino[DominoLeftConcurrencyFallIndex[DominoIndex] - 1] + 1);
 
+		// 이전 도미노를 오른쪽으로 넘어뜨려 현재 도미노를 넘어뜨리는 도미노 중 이전까지의 넘어뜨리는 횟수 + 현재 도미노를 넘어뜨릴 수 있는 도미노를 넘어뜨리는 횟수(1)의 최소
 		for (int LeftDominoIndex = 0; LeftDominoIndex < DominoIndex; ++LeftDominoIndex)
 		{
 			if (DominoIndex <= DominoRightConcurrencyFallIndex[LeftDominoIndex])
