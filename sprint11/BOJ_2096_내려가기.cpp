@@ -1,9 +1,5 @@
 #include <iostream>
-#include <vector>
 #include <algorithm>
-#include <limits.h>
-#include <stack>
-#include <tuple>
 #include <array>
 
 using namespace std;
