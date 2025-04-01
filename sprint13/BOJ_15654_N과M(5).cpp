@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <array>
 
 using namespace std;
 
@@ -9,7 +10,7 @@ using namespace std;
 int N = 0, M = 0;
 vector<int> combinations;
 vector<int> nums;
-bool visited[MAX] = { false };
+array<bool, MAX> visited = { false };
 
 void printCombinations(const int i, const int r)
 {
@@ -21,7 +22,7 @@ void printCombinations(const int i, const int r)
 		}
 
 		cout << '\n';
-		
+
 		return;
 	}
 
