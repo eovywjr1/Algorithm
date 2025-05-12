@@ -7,75 +7,56 @@ using namespace std;
 
 int N = 0, M = 0;
 int MaxSafeAreaCount = 0;
+int DefaultSafeAreaCount = 0;
+const int MaxWallCount = 3;
+vector<pair<int, int>> VirusCoordis;
 vector<vector<int>> Area;
 
-int BFS(const pair<int, int> StartCoordi, vector<vector<bool>>& VisitedArea)
+void BFS()
 {
+	vector<vector<bool>> VisitedArea(N, vector<bool>(M, false));
 	queue<pair<int, int>> CoordiQueue;
-	CoordiQueue.push(StartCoordi);
-	VisitedArea[StartCoordi.first][StartCoordi.second] = true;
+
+	for (const pair<int, int>& VirusCoordi : VirusCoordis)
+	{
+		CoordiQueue.push(VirusCoordi);
+		VisitedArea[VirusCoordi.first][VirusCoordi.second] = true;
+	}
 
 	const vector<int> DirI({ -1,1,0,0 });
 	const vector<int> DirJ({ 0,0,-1,1 });
 
-	int Sum = 0;
-	bool bIsVirus = false;
+	int VirusSpreadCount = 0;
 
 	while (!CoordiQueue.empty())
 	{
 		const pair<int, int> CurrentCoordi = CoordiQueue.front();
 		CoordiQueue.pop();
 
-		++Sum;
-
 		for (int Dir = 0; Dir < 4; ++Dir)
 		{
 			const int NextI = CurrentCoordi.first + DirI[Dir];
 			const int NextJ = CurrentCoordi.second + DirJ[Dir];
 
-			if (NextI < 0 || NextI >= N || NextJ < 0 || NextJ >= M || VisitedArea[NextI][NextJ] || Area[NextI][NextJ] == 1)
+			if (NextI < 0 || NextI >= N || NextJ < 0 || NextJ >= M || VisitedArea[NextI][NextJ] || Area[NextI][NextJ] != 0)
 			{
 				continue;
 			}
 
-			if (Area[NextI][NextJ] == 2)
-			{
-				bIsVirus = true;
-			}
-
+			++VirusSpreadCount;
 			CoordiQueue.push({ NextI,NextJ });
 			VisitedArea[NextI][NextJ] = true;
 		}
 	}
 
-	return bIsVirus ? 0 : Sum;
-}
-
-void FindSafeArea()
-{
-	vector<vector<bool>> VisitedArea(N, vector<bool>(M, false));
-	int SafeAreaCount = 0;
-
-	for (int i = 0; i < N; ++i)
-	{
-		for (int j = 0; j < M; ++j)
-		{
-			if (!VisitedArea[i][j] && Area[i][j] == 0)
-			{
-				SafeAreaCount += BFS({ i,j }, VisitedArea);
-			}
-		}
-	}
-
-	MaxSafeAreaCount = max(MaxSafeAreaCount, SafeAreaCount);
+	MaxSafeAreaCount = max(MaxSafeAreaCount, DefaultSafeAreaCount - VirusSpreadCount - MaxWallCount);
 }
 
 void SetWall(int Count)
 {
-	const int MaxWallCount = 3;
 	if (Count == MaxWallCount)
 	{
-		FindSafeArea();
+		BFS();
 		return;
 	}
 
@@ -98,12 +79,21 @@ int main()
 	cin >> N >> M;
 
 	Area = vector<vector<int>>(N, vector<int>(M, 0));
-	
+
 	for (int i = 0; i < N; ++i)
 	{
 		for (int j = 0; j < M; ++j)
 		{
 			cin >> Area[i][j];
+
+			if (Area[i][j] == 0)
+			{
+				++DefaultSafeAreaCount;
+			}
+			else if (Area[i][j] == 2)
+			{
+				VirusCoordis.push_back({ i,j });
+			}
 		}
 	}
 
