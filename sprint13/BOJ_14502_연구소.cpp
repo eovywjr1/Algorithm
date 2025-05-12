@@ -9,27 +9,16 @@ int N = 0, M = 0;
 int MaxSafeAreaCount = 0;
 vector<vector<int>> Area;
 
-void BFS()
+int BFS(const pair<int, int> StartCoordi, vector<vector<bool>>& VisitedArea)
 {
 	queue<pair<int, int>> CoordiQueue;
-	vector<vector<bool>> VisitedArea(N, vector<bool>(M, false));
-	
-	for (int i = 0; i < N; ++i)
-	{
-		for (int j = 0; j < M; ++j)
-		{
-			if (Area[i][j] != 1)
-			{
-				CoordiQueue.push({i,j});
-				VisitedArea[i][j] = true;
-			}
-		}
-	}
+	CoordiQueue.push(StartCoordi);
+	VisitedArea[StartCoordi.first][StartCoordi.second] = true;
 
 	const vector<int> DirI({ -1,1,0,0 });
 	const vector<int> DirJ({ 0,0,-1,1 });
 
-	int SafeAreaCount = 0;
+	int Sum = 0;
 	bool bIsVirus = false;
 
 	while (!CoordiQueue.empty())
@@ -37,7 +26,7 @@ void BFS()
 		const pair<int, int> CurrentCoordi = CoordiQueue.front();
 		CoordiQueue.pop();
 
-		++SafeAreaCount;
+		++Sum;
 
 		for (int Dir = 0; Dir < 4; ++Dir)
 		{
@@ -59,8 +48,24 @@ void BFS()
 		}
 	}
 
-	if(bIsVirus)
+	return bIsVirus ? 0 : Sum;
+}
 
+void FindSafeArea()
+{
+	vector<vector<bool>> VisitedArea(N, vector<bool>(M, false));
+	int SafeAreaCount = 0;
+
+	for (int i = 0; i < N; ++i)
+	{
+		for (int j = 0; j < M; ++j)
+		{
+			if (!VisitedArea[i][j] && Area[i][j] == 0)
+			{
+				SafeAreaCount += BFS({ i,j }, VisitedArea);
+			}
+		}
+	}
 
 	MaxSafeAreaCount = max(MaxSafeAreaCount, SafeAreaCount);
 }
@@ -70,7 +75,7 @@ void SetWall(int Count)
 	const int MaxWallCount = 3;
 	if (Count == MaxWallCount)
 	{
-		BFS();
+		FindSafeArea();
 		return;
 	}
 
