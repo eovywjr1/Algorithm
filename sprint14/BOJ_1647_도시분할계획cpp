@@ -1,0 +1,71 @@
+#include <iostream>
+#include <queue>
+#include <algorithm>
+#include <vector>
+#include <unordered_map>
+
+using namespace std;
+
+unordered_map<int, vector<pair<int, int>>> AdjEdges;
+int N = 0;
+int MSTCost = 0;
+
+void Prim()
+{
+	vector<bool> Visited(N + 1, false);
+	priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> PrimPQ;
+
+	PrimPQ.push({ 0, 1 });
+	Visited[0] = true;
+
+	int MaxCost = 0;
+
+	while (!PrimPQ.empty())
+	{
+		auto [Cost, Vertex] = PrimPQ.top();
+		PrimPQ.pop();
+
+		if (Visited[Vertex])
+		{
+			continue;
+		}
+
+		Visited[Vertex] = true;
+
+		MSTCost += Cost;
+		MaxCost = max(MaxCost, Cost);
+
+		for (const auto& [Cost, AdjVertex] : AdjEdges[Vertex])
+		{
+			if (!Visited[AdjVertex])
+			{
+				PrimPQ.push({ Cost, AdjVertex });
+			}
+		}
+	}
+
+	MSTCost -= MaxCost;
+}
+
+int main()
+{
+	ios_base::sync_with_stdio(false);
+	cin.tie(nullptr);
+	cout.tie(nullptr);
+
+	int M = 0;
+	cin >> N >> M;
+
+	for (int i = 0; i < M; ++i)
+	{
+		int Vertex1 = 0, Vertex2 = 0, Cost = 0;
+		cin >> Vertex1 >> Vertex2 >> Cost;
+
+		AdjEdges[Vertex1].push_back({ Cost, Vertex2 });
+		AdjEdges[Vertex2].push_back({ Cost, Vertex1 });
+	}
+
+	Prim();
+
+	cout << MSTCost;
+}
