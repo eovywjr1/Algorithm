@@ -18,7 +18,7 @@ int main()
 		cin >> Sequence[i];
 	}
 
-	int MinLength = N + 1;
+	int MinLength = INT_MAX;
 	int LeftIndex = 0, RightIndex = 0;
 	int Sum = Sequence[0];
 
@@ -37,7 +37,7 @@ int main()
 		}
 	}
 	
-	if (MinLength == N + 1)
+	if (MinLength == INT_MAX)
 	{
 		cout << 0;
 	}
